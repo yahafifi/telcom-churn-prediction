@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import joblib
 from pathlib import Path
@@ -60,12 +60,18 @@ def extract_data(data):
 
 @app.get('/predict')
 def show():
-    data = request.form
+    data = request.args
     df = extract_data(data)
     pred = load_model().predict(df)[0]
     if pred == 1:
       return jsonify({"prediction": "Churn"})
     else:
       return jsonify({"prediction": "Not Churn"})
+    
+
+@app.get('/')
+def index():
+   return render_template('index.html')
+
 
 app.run()
