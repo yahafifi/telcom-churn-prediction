@@ -60,14 +60,16 @@ def extract_data(data):
 
 @app.get('/predict')
 def show():
-    data = request.args
-    df = extract_data(data)
-    pred = load_model().predict(df)[0]
-    if pred == 1:
-      return jsonify({"prediction": "Churn"})
-    else:
-      return jsonify({"prediction": "Not Churn"})
-    
+    try:
+        data = request.args
+        df = extract_data(data)
+        pred = load_model().predict(df)[0]
+        if pred == 1:
+            return jsonify({"prediction": "Churn"})
+        else:
+            return jsonify({"prediction": "Not Churn"})
+    except:
+        return jsonify({"message": "عيب كدة يا ولد ابعت الريكويست عدل"})
 
 @app.get('/')
 def index():
