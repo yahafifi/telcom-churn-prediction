@@ -5,10 +5,8 @@ from pathlib import Path
 
 app = Flask(__name__)
 
-parent_path = Path(__file__).resolve().parent.parent
-
 def load_model():
-    model_path = str(parent_path) + '/model/log_reg_pipeline.joblib'
+    model_path = Path(__file__).resolve().parent.parent / "model/log_reg_pipeline.joblib"
     model = joblib.load(model_path)
     return model
 
@@ -76,4 +74,5 @@ def index():
    return render_template('index.html')
 
 
-app.run()
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
